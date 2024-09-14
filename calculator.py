@@ -1,7 +1,7 @@
 def calculate() :
     result = 0
-    # calculation = input()
-    calculation = "(((10    +              3) -           9) /    2)    -         (0.5)";
+    calculation = input()
+    #calculation = "(10 + 5) / 2";
     match checkForError(calculation):
         case 1:
             raise Exception("ERROR: Incorrect parenthesis.")
@@ -10,7 +10,7 @@ def calculate() :
     calculation = removeWhiteSpaces(calculation)
     print(calculation)
     print("Errorless rn")
-    print(recursive(calculation))
+    print(recursive(calculation), ": result")
 
 def checkForError(strVal) :
     stack = []
@@ -37,18 +37,33 @@ def removeWhiteSpaces(string) :
 
 def recursive(strval) :
     substr = ""
-    for i in range(len(strval)):
-        if strval[i] == "(":
-            recursive(strVal[i+1:])
-        if strval[i] == ")":
+    while len(strval) > 0:
+        if strval[0] == "(":
+            #val = str(recursive(strval[1:]))
+            strval = str(recursive(strval[1:]))
+        elif strval[0] == ")":
+            strval = strval[1:]
             break
-        substr += strval[i]
-
+        else:
+            substr += strval[0]
+            strval = strval[1:]
+    #for i in range(len(strval)):
+    #    if strval[i] == "(":
+    #        strval = strval[:i] + str(recursive(strval[i+1:])) + strval[i + 1:]
+    #    if strval[i] == ")":
+    #        strval = strval[:i] + strval[i+1:]
+    #        break
+    #    substr += strval[i]
+    #    if i == 0:
+    #        strval = strval[1:]
+    #        continue
+    strval = strval[:len(strval)]
     n1, op, n2 = extractFromStr(substr)
-    return calculateOperation(n1 ,op, n2);
+    print(strval, "is strval")
+    return str(calculateOperation(n1 ,op, n2)) + strval;
 
 def extractFromStr(string):
-    n1, op, n2;
+    n1, op, n2 = "", "", ""
     n1Done = False;
     operatorSelection = "+-*/"
     for letter in string:
@@ -56,17 +71,19 @@ def extractFromStr(string):
         if not n1Done:
             if letter.isdigit() or letter == ".":
                 n1 += letter
-            elif operatorSelection.includes(letter):
+            elif letter in operatorSelection:
                 op = letter
                 n1Done = True
             continue
 
         n2 += letter
 
+    print(n1, op, n2)
+
     n1 = float(n1)
     n2 = float(n2)
 
-    return n1, op, n3
+    return n1, op, n2
 
 def calculateOperation(a, op, b) :
     answer = 0
@@ -80,7 +97,9 @@ def calculateOperation(a, op, b) :
         case "/":
             if b == 0 :
                 raise Exception("ERROR: cannot divide by 0")
-            asnwer = a / b
+            answer = a / b
+    print(a, b, op, answer, "CMON")
+    print("-----")
     return answer
 
 calculate()
