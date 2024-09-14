@@ -6,6 +6,8 @@ def calculate() :
             raise Exception("ERROR: Incorrect parenthesis.")
         case 2:
             raise Exception("ERROR: No letters in calculation")
+    calculation = removeWhiteSpaces(calculation)
+    print(calculation)
     print("Errorless rn")
 
 def checkForError(strVal) :
@@ -27,6 +29,9 @@ def checkForError(strVal) :
         return 1
 
     return 0
+
+def removeWhiteSpaces(string) :
+    return string.replace(" ", "")
 
 def calculateOperation() :
     answer = 0
