@@ -35,6 +35,20 @@ def checkForError(strVal) :
 def removeWhiteSpaces(string) :
     return string.replace(" ", "")
 
+def addParenthesis(string):
+    operators = "+-*/"
+    for i in range(len(string)):
+        if string[i] in operators:
+            subindex = i - 1
+            while subindex > 0:
+                if string[subindex] in operators:
+
+                elif string[subindex] == "(":
+                    break
+                subindex-=1
+
+    return string
+
 def recursive(strval) :
     substr = ""
     while len(strval) > 0:
